@@ -83,9 +83,9 @@ class Game:
         """
         for r in range (max(0, row-1), min(self.board_dim-1, row+1)+1):
             for c in range(max(0, col-1), min(self.board_dim-1, col+1)+1):
-                if (r, c) in self.search:
+                if (r, c) in self.already_search:
                     continue
-                self.search(r, c)
+                self.already_search(r, c)
         
         return True
         
@@ -150,7 +150,7 @@ def play(board_dim=10, bomb_num=10):
         if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
             print("Ooopsie, Try Again!")
             continue
-        safe = game.search(row, col)
+        safe = game.already_search(row, col)
         if not safe:
             break
         
