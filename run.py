@@ -66,7 +66,7 @@ class Game:
                 if r == row and c == col:
                     
                     continue
-                if self.game_game[r][c] == '*':
+                if self.game[r][c] == '*':
                     bombs_beside += 1
     
         return bombs_beside
