@@ -62,7 +62,7 @@ class Game:
         """  
         bombs_beside = 0
         for r in range (max(0, row-1), min(self.board_dim-1, row+1)+1):
-            for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
+            for c in range(max(0, col-1), min(self.board_dim-1, col+1)+1):
                 if r == row and c == col:
                     
                     continue
@@ -82,7 +82,7 @@ class Game:
         This function keeps track of what we have searched. Using repeat logic
         """
         for r in range (max(0, row-1), min(self.board_dim-1, row+1)+1):
-            for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
+            for c in range(max(0, col-1), min(self.board_dim-1, col+1)+1):
                 if (r, c) in self.search:
                     continue
                 self.search(r, c)
