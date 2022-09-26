@@ -137,10 +137,8 @@ class Game:
         string_rep = indices_row + '-'*str_len + '\n' + string_rep + '-'*str_len
 
         return string_rep
-  
-                   
-                   
-def play(board_dim= 20, bomb_num=20):
+               
+def play(board_dim=10, bomb_num=10):
     game = Game(board_dim, bomb_num)
      
     safe = True
