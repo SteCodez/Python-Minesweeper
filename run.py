@@ -1,3 +1,5 @@
+import random
+
 def get_user_name():
         """
         Gets user name.
@@ -28,7 +30,9 @@ class Game_board:
         generates a board by defined dimenion size.
         """
         board = [[None for _ in range(self.board_size)] for _ in range(self.dim_size)]
-    
+        """
+        planting bombs
+        """
 def play(board_size= 20, bomb_num=20):
 
 
