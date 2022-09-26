@@ -101,6 +101,45 @@ class Game:
                 else:
                     shown_board[row][col] = ' '
                    
+        string_rep = ''
+                  
+        # get max column widths for printing
+        widths = []
+        for idx in range(self.board_dim):
+            columns = map(lambda x: x[idx], shown_board)
+            widths.append(
+                len(
+                    max(columns, key = len)
+                )
+            )
+
+        # printing the csv strings
+        indices = [i for i in range(self.board_dim)]
+        indices_row = '   '
+        cells = []
+        for idx, col in enumerate(indices):
+            format = '%-' + str(widths[idx]) + "s"
+            cells.append(format % (col))
+        indices_row += '  '.join(cells)
+        indices_row += '  \n'
+        
+        for i in range(len(shown_board)):
+            row = shown_board[i]
+            string_rep += f'{i} |'
+            cells = []
+            for idx, col in enumerate(row):
+                format = '%-' + str(widths[idx]) + "s"
+                cells.append(format % (col))
+            string_rep += ' |'.join(cells)
+            string_rep += ' |\n'
+
+        str_len = int(len(string_rep) / self.board_dim)
+        string_rep = indices_row + '-'*str_len + '\n' + string_rep + '-'*str_len
+
+        return string_rep
+  
+                   
+                   
 def play(board_dim= 20, bomb_num=20):
     game = Game(board_dim, bomb_num)
      
