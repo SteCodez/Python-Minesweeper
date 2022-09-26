@@ -45,7 +45,7 @@ class Game:
                 continue
            
             game[row][col] == '*' #plants the bomb
-            bombs_planted += 1
+            bombs_plnted += 1
         
         return game    
      
