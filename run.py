@@ -16,7 +16,7 @@ class Game:
         self.bomb_num = bomb_num
         self.board_dim = board_dim
         """
-        The game Game_game class allows us to easily replicate objects using OOP tools.
+        The game  class allows us to easily replicate objects using OOP tools.
         """
         self.game = self.generate_new_game()
         self.assign_values()
@@ -102,28 +102,28 @@ def __str__(self):
                 shown_board[row][col] = ' '
                    
 def play(board_dim= 20, bomb_num=20):
-     game = Game(board_dim, bomb_num)
+    game = Game(board_dim, bomb_num)
      
-     safe = True
+    safe = True
      
-     while len(game.search) < game.board_dim ** 2 - bomb_num:
-         print(game)
-         user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
-         row, col = int(user_input[0]), int (user_input[-1])
-         if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
+    while len(game.search) < game.board_dim ** 2 - bomb_num:
+        print(game)
+        user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
+        row, col = int(user_input[0]), int (user_input[-1])
+        if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
             print("Ooopsie, Try Again!")
             continue
-         safe = game.search(row, col)
-         if not safe:
+        safe = game.search(row, col)
+        if not safe:
             break
         
-     if safe:
+    if safe:
         print("You did it!! Well done :)")
-     else:
-         print("GAME OVER!!! :( ")
+    else:
+        print("GAME OVER!!! :( ")
          
-     print(game)
+    print(game)
 
-play()
+    play()
   
 get_user_name()  
