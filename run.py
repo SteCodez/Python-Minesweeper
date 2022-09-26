@@ -9,15 +9,15 @@ def get_user_name():
     
         print(f"Best of luck {name_str}!")
         
-class Game_board:
-    def __init__(self, bomb_num, board_sze):
+class Game:
+    def __init__(self, bomb_num, game_sze):
    
         self.bomb_num = bomb_num
-        self.board_sze = board_sze
+        self.game_sze = game_sze
         """
-        The board Game_board class allows us to easily replicate objects using OOP tools.
+        The game Game_game class allows us to easily replicate objects using OOP tools.
         """
-        self.board = self.make_board()
+        self.game = self.make_game()
         self.assign_values()
         """
         adding an empty set that we will use to store which locations we 
@@ -25,51 +25,49 @@ class Game_board:
         """
         self.already_dug = ()
         
-    def generate_new_board(self):
+    def generate_new_game(self):
         """
-        generates a board by defined dimenion size.
+        generates a game by defined dimenion size.
         """
-        board = [[None for _ in range(self.board_sze)] for _ in range(self.board_sze)]
+        game = [[None for _ in range(self.game_sze)] for _ in range(self.game_sze)]
         """
         planting bombs by using an equation to return random intergers
         """
         bombs_plnted = 0
         while bombs_plnted < self.bomb_num:
-            loc = random.randint(0, self.board_sze**2 - 1)
-            row = loc // self.board_sze
-            col = loc % self.board_sze
+            loc = random.randint(0, self.game_sze**2 - 1)
+            row = loc // self.game_sze
+            col = loc % self.game_sze
             
-            if board[row][col] == '*':
+            if game[row][col] == '*':
                 #bomb already there so continue on with loop
                 continue
            
-            board[row][col] == '*' #plants the bomb
+            game[row][col] == '*' #plants the bomb
             bombs_planted += 1
         
-        return board    
+        return game    
      
     def assign_values(self):
-        for c in range(self.board_sze):
-            for r in range(self.board_sze):
-                if self.Game_board[r][c] == '*':
+        for c in range(self.game_sze):
+            for r in range(self.game_sze):
+                if self.Game[r][c] == '*':
                     continue
-                self.Game_board[r][c] = self.highlight_adjacent_bombs(r, c)
-    
+                self.Game[r][c] = self.highlight_adjacent_bombs(r, c)
     
     def highlight_adjacent_bombs(self, row, col):
         
         bombs_beside = 0
-        for r in range (max(0, row-1), min(self.board_sze-1, row+1)+1):
+        for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
                 if r == row and c == col:
                     continue
-                if self.Game_board[r][c] == '*':
+                if self.Game_game[r][c] == '*':
                     bombs_beside += 1
         
         return bombs_beside
-        
-            
-def play(board_sze= 20, bomb_num=20):
+                
+def play(game_sze= 20, bomb_num=20):
     
 
 
