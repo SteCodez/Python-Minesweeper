@@ -89,17 +89,17 @@ class Game:
         
         return True
         
-def __str__(self):
-    """
-    The below code creates a new array that represents what the user will see.
-    """
-    shown_board = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
-    for row in range (self.board_dim):
-        for col in range(self.board_dim):
-            if (row, col) in self.already.search:
-                shown_board[row][col] = str(self.game[row][col])
-            else:
-                shown_board[row][col] = ' '
+    def __str__(self):
+        """
+        The below code creates a new array that represents what the user will see.
+        """
+        shown_board = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
+        for row in range (self.board_dim):
+            for col in range(self.board_dim):
+                if (row, col) in self.already.search:
+                    shown_board[row][col] = str(self.game[row][col])
+                else:
+                    shown_board[row][col] = ' '
                    
 def play(board_dim= 20, bomb_num=20):
     game = Game(board_dim, bomb_num)
