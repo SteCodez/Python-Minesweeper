@@ -11,14 +11,14 @@ def get_user_name():
         print(f"Best of luck {name_str}!")
         
 class Game:
-    def __init__(self, bomb_num, game_sze):
+    def __init__(self, bomb_num, board_dim):
    
         self.bomb_num = bomb_num
-        self.game_sze = game_sze
+        self.board_dim = board_dim
         """
         The game Game_game class allows us to easily replicate objects using OOP tools.
         """
-        self.game = self.make_game()
+        self.game = self.make_new_game()
         self.assign_values()
         """
         adding an empty set that we will use to store which locations we 
@@ -30,15 +30,15 @@ class Game:
         """
         generates a game by defined dimenion size.
         """
-        game = [[None for _ in range(self.game_sze)] for _ in range(self.game_sze)]
+        game = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
         """
         planting bombs by using an equation to return random intergers
         """
         bombs_plnted = 0
         while bombs_plnted < self.bomb_num:
-            loc = random.randint(0, self.game_sze**2 - 1)
-            row = loc // self.game_sze
-            col = loc % self.game_sze
+            loc = random.randint(0, self.board_dim**2 - 1)
+            row = loc // self.board_dim
+            col = loc % self.board_dim
             
             if game[row][col] == '*':
                 #bomb already there so continue on with loop
@@ -50,8 +50,8 @@ class Game:
         return game    
      
     def assign_values(self):
-        for c in range(self.game_sze):
-            for r in range(self.game_sze):
+        for c in range(self.board_dim):
+            for r in range(self.board_dim):
                 if self.Game[r][c] == '*':
                     continue
                 self.Game[r][c] = self.highlight_adjacent_bombs(r, c)
@@ -61,7 +61,7 @@ class Game:
          iterating through adjacent positions, making sure not to go out of bounds by using rhe min and max.
         """  
         bombs_beside = 0
-        for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
+        for r in range (max(0, row-1), min(self.board_dim-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
                 if r == row and c == col:
                     
@@ -81,7 +81,7 @@ class Game:
         """
         This function keeps track of what we have searched. Using repeat logic
         """
-        for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
+        for r in range (max(0, row-1), min(self.board_dim-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
                 if (r, c) in self.search:
                     continue
@@ -93,24 +93,24 @@ def __str__(self):
     """
     The below code creates a new array that represents what the user will see.
     """
-    shown_board = [[None for _ in range(self.game_sze)] for _ in range(self.game_sze)]
-    for row in range (self.game_sze):
-        for col in range(self.game_sze):
+    shown_board = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
+    for row in range (self.board_dim):
+        for col in range(self.board_dim):
             if (row, col) in self.already.dug:
                 shown_board[row][col] = str(self.game[row][col])
             else:
                 shown_board[row][col] = ' '
                    
-def play(game_sze= 20, bomb_num=20):
-     game = Game(game_sze, bomb_num)
+def play(board_dim= 20, bomb_num=20):
+     game = Game(board_dim, bomb_num)
      
      safe = True
      
-     while len(game.search) < game.game_sze ** 2 - bomb_num:
+     while len(game.search) < game.board_dim ** 2 - bomb_num:
          print(game)
          user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
          row, col = int(user_input[0]), int (user_input[-1])
-         if row < 0 or row >= game_sze or col < 0 or col >= game_sze:
+         if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
             print("Ooopsie, Try Again!")
             continue
          safe = game.search(row, col)
@@ -124,6 +124,6 @@ def play(game_sze= 20, bomb_num=20):
          
      print(game)
 
-     play()
+play()
   
-     get_user_name()  
+get_user_name()  
