@@ -57,7 +57,7 @@ class Game:
     
     def highlight_adjacent_bombs(self, row, col):
         """
-         iterating through adjacent positions, making sure not to go out of bounds.
+         iterating through adjacent positions, making sure not to go out of bounds by using rhe min and max.
         """  
         bombs_beside = 0
         for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
@@ -77,7 +77,9 @@ class Game:
             return False
         elif self.board[row][col] > 0:
             return True
-        
+        """
+        This function keeps track of what we have searched. Using repeat logic
+        """
         for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
                 if (r, c) in self.search:
@@ -86,10 +88,22 @@ class Game:
         
         return True
         
-                
+def __str__(self):
+    shown_board = [[None for _ in range(self.game_sze)] for _ in range(self.game_sze)]
+    for row in range (self.game_sze):
+        for col in range(self.game_sze):
+            if (row, col) in self.already.dug:
+                shown_board[row][col] = str(self.game[row][col])
+            else:
+                shown_board[row][col] = ' '
+                   
 def play(game_sze= 20, bomb_num=20):
      game = Game(game_sze, bomb_num)
+     
+     while len(game.search) < game.game_sze ** 2 - bomb_num:
+         print(game)
+         user_input
    
-    play()
-    
+play()
+  
 get_user_name()  
