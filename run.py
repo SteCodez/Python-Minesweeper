@@ -124,6 +124,7 @@ def play(board_dim= 20, bomb_num=20):
          
     print(game)
     
-  
-get_user_name()  
-play()
+def main()
+ 
+    get_user_name()  
+    play()
