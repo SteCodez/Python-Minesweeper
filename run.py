@@ -1,4 +1,5 @@
 import random
+import re
 
 def get_user_name():
         """
@@ -105,7 +106,7 @@ def play(game_sze= 20, bomb_num=20):
      
      while len(game.search) < game.game_sze ** 2 - bomb_num:
          print(game)
-         user_input
+         user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
    
 play()
   
