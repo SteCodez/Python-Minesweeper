@@ -55,7 +55,6 @@ class Game:
                     continue
                 self.Game[r][c] = self.highlight_adjacent_bombs(r, c)
     
-    
     def highlight_adjacent_bombs(self, row, col):
         """
          iterating through adjacent positions, making sure not to go out of bounds.
@@ -68,14 +67,29 @@ class Game:
                     continue
                 if self.Game_game[r][c] == '*':
                     bombs_beside += 1
-        
+    
         return bombs_beside
+    
+    def search(self, row, col):
+        self.search.add((row,col))
+        
+        if self.game[row][col] == '*':
+            return False
+        elif self.board[row][col] > 0:
+            return True
+        
+        for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
+            for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
+                if (r, c) in self.search:
+                    continue
+                self.search(r, c)
+        
+        return True
+        
                 
 def play(game_sze= 20, bomb_num=20):
-    
-
-
-    
-    
+     game = Game(game_sze, bomb_num)
+   
     play()
+    
 get_user_name()  
