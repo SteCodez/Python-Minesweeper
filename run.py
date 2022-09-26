@@ -55,12 +55,16 @@ class Game:
                     continue
                 self.Game[r][c] = self.highlight_adjacent_bombs(r, c)
     
+    
     def highlight_adjacent_bombs(self, row, col):
-        
+        """
+         iterating through adjacent positions, making sure not to go out of bounds.
+        """  
         bombs_beside = 0
         for r in range (max(0, row-1), min(self.game_sze-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
                 if r == row and c == col:
+                    
                     continue
                 if self.Game_game[r][c] == '*':
                     bombs_beside += 1
