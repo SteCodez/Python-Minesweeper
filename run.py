@@ -29,11 +29,17 @@ class Game_board:
         """
         generates a board by defined dimenion size.
         """
-        board = [[None for _ in range(self.board_size)] for _ in range(self.dim_size)]
+        board = [[None for _ in range(self.board_sze)] for _ in range(self.board_sze)]
         """
-        planting bombs
+        planting bombs by using an equation to return random intergers
         """
-def play(board_size= 20, bomb_num=20):
+        bombs_plnted = 0
+        while bombs_plnted < self.bomb_num:
+            loc = random.randint(0, self.board_sze**2 - 1)
+            rwo = loc // self.board_sze
+            
+            
+def play(board_sze= 20, bomb_num=20):
 
 
     
