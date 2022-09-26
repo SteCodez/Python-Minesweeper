@@ -24,7 +24,7 @@ class Game:
         adding an empty set that we will use to store which locations we 
         have already search for bombs using tuples (row, col)
         """
-        self.already_search = ()
+        self.already_search = set()
         
     def generate_new_game(self):
         """
