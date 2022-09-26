@@ -52,9 +52,9 @@ class Game:
     def assign_values(self):
         for c in range(self.board_dim):
             for r in range(self.board_dim):
-                if self.Game[r][c] == '*':
+                if self.game[r][c] == '*':
                     continue
-                self.Game[r][c] = self.highlight_adjacent_bombs(r, c)
+                self.game[r][c] = self.highlight_adjacent_bombs(r, c)
     
     def highlight_adjacent_bombs(self, row, col):
         """
@@ -66,7 +66,7 @@ class Game:
                 if r == row and c == col:
                     
                     continue
-                if self.Game_game[r][c] == '*':
+                if self.game_game[r][c] == '*':
                     bombs_beside += 1
     
         return bombs_beside
