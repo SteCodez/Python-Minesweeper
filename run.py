@@ -107,7 +107,11 @@ def play(game_sze= 20, bomb_num=20):
      while len(game.search) < game.game_sze ** 2 - bomb_num:
          print(game)
          user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
-   
+         row, col = int(user_input[0]), int (user_input[-1])
+         if row < 0 or row >= game_sze or col < 0 or col >= game_sze:
+            print("Ooopsie, Try Again!")
+            continue
+
 play()
   
 get_user_name()  
