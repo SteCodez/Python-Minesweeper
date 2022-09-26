@@ -18,7 +18,7 @@ class Game:
         """
         The game Game_game class allows us to easily replicate objects using OOP tools.
         """
-        self.game = self.make_new_game()
+        self.game = self.generate_new_game()
         self.assign_values()
         """
         adding an empty set that we will use to store which locations we 
