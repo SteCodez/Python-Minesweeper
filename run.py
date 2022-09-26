@@ -12,8 +12,8 @@ def get_user_name():
 class Game_board:
     def __init__(self, bomb_num, board_sze):
    
-        self.bomb_num
-        self.board_size
+        self.bomb_num = bomb_num
+        self.board_size = board_sze
         """
         The board Game_board class allows us to easily replicate objects using OOP tools.
         """
