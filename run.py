@@ -22,8 +22,14 @@ class Game_board:
         have already dug for bombs using tuples (row, col)
         """
         self.already_dug = ()
+        
+    def generate_new_board(self):
+        """
+        generates a board by defined dimenion size.
+        """
+        board = [[None for _ in range(self.board_size)] for _ in range(self.dim_size)]
     
-def play(board_size, bomb_num):
+def play(board_size= 20, bomb_num=20):
 
 
     
