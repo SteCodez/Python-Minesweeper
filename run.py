@@ -128,3 +128,5 @@ def main():
  
     get_user_name()  
     play()
+    
+main()
