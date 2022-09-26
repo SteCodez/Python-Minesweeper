@@ -36,8 +36,16 @@ class Game_board:
         bombs_plnted = 0
         while bombs_plnted < self.bomb_num:
             loc = random.randint(0, self.board_sze**2 - 1)
-            rwo = loc // self.board_sze
+            row = loc // self.board_sze
+            col = loc % self.board_sze
             
+            if board[row][col] == '*':
+                continue
+           
+            board[row][col] == '*'
+            bombs_planted += 1
+        
+        return board    
             
 def play(board_sze= 20, bomb_num=20):
 
