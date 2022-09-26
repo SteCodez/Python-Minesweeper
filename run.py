@@ -72,7 +72,7 @@ class Game:
         return bombs_beside
     
     def search(self, row, col):
-        self.search.add((row,col))
+        self.already_search.add((row,col))
         
         if self.game[row][col] == '*':
             return False
