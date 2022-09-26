@@ -89,6 +89,9 @@ class Game:
         return True
         
 def __str__(self):
+    """
+    The below code creates a new array that represents what the user will see.
+    """
     shown_board = [[None for _ in range(self.game_sze)] for _ in range(self.game_sze)]
     for row in range (self.game_sze):
         for col in range(self.game_sze):
