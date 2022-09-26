@@ -151,7 +151,7 @@ def play(board_dim=10, bomb_num=10):
         if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
             print("Ooopsie, Try Again!")
             continue
-        safe = game.already_search(row, col)
+        safe = game.search(row, col)
         if not safe:
             break
         
@@ -159,7 +159,8 @@ def play(board_dim=10, bomb_num=10):
         print("You did it!! Well done :)")
     else:
         print("GAME OVER!!! :( ")
-         
+        game.already_search = [(r,c) for r in range(game.board_dim) for c in range(game.board_dim)]
+        print(game)
     print(game)
     
 def main():
