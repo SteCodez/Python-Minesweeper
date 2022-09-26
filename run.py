@@ -40,14 +40,37 @@ class Game_board:
             col = loc % self.board_sze
             
             if board[row][col] == '*':
+                #bomb already there so continue on with loop
                 continue
            
-            board[row][col] == '*'
+            board[row][col] == '*' #plants the bomb
             bombs_planted += 1
         
         return board    
+     
+    def assign_values(self):
+        for c in range(self.board_sze):
+            for r in range(self.board_sze):
+                if self.Game_board[r][c] == '*':
+                    continue
+                self.Game_board[r][c] = self.highlight_adjacent_bombs(r, c)
+    
+    
+    def highlight_adjacent_bombs(self, row, col):
+        
+        bombs_beside = 0
+        for r in range (max(0, row-1), min(self.board_sze-1, row+1)+1):
+            for c in range(max(0, col-1), min(self.dim_sze-1, col+1)+1):
+                if r == row and c == col:
+                    continue
+                if self.Game_board[r][c] == '*':
+                    bombs_beside += 1
+        
+        return bombs_beside
+        
             
 def play(board_sze= 20, bomb_num=20):
+    
 
 
     
