@@ -146,7 +146,7 @@ def play(board_dim=10, bomb_num=10):
     while len(game.already_search) < game.board_dim ** 2 - bomb_num:
         print(game)
         user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
-        row, col = int(user_input[0]), int (user_input[-1])
+        row, col = int(user_input[0]), int(user_input[-1])
         if row < 0 or row >= board_dim or col < 0 or col >= board_dim:
             print("Ooopsie, Try Again!")
             continue
