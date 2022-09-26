@@ -123,7 +123,7 @@ def play(board_dim= 20, bomb_num=20):
         print("GAME OVER!!! :( ")
          
     print(game)
-
-    play()
+    
   
 get_user_name()  
+play()
