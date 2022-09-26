@@ -71,7 +71,7 @@ class Game:
     
         return bombs_beside
     
-    def already_search(self, row, col):
+    def search(self, row, col):
         
         self.already_search.add((row, col))
         
@@ -159,7 +159,7 @@ def play(board_dim=10, bomb_num=10):
         print("You did it!! Well done :)")
     else:
         print("GAME OVER!!! :( ")
-        game.search = [(r,c) for r in range(game.board_dim) for c in range(game.board_dim)]
+        game.already_search = [(r,c) for r in range(game.board_dim) for c in range(game.board_dim)]
         print(game)
     print(game)
     
