@@ -1,9 +1,3 @@
-class Game_board:
-    def __init__(self, bomb_num, board_sze):
-
-        self.bomb_num
-        self.board_size
-
 def get_user_name():
         """
         Gets user name.
@@ -12,5 +6,27 @@ def get_user_name():
         name_str = input("Enter your name here: ")
     
         print(f"Best of luck {name_str}!")
+        
+class Game_board:
+    def __init__(self, bomb_num, board_sze):
+   
+        self.bomb_num
+        self.board_size
+        """
+        The board Game_board class allows us to easily replicate objects using OOP tools.
+        """
+        self.board = self.make_board()
+        self.assign_values()
+        """
+        adding an empty set that we will use to store which locations we 
+        have already dug for bombs using tuples (row, col)
+        """
+        self.already_dug = ()
+    
+def play(board_size, bomb_num):
 
+
+    
+    
+    play()
 get_user_name()  
