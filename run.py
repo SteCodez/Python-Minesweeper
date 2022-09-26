@@ -22,9 +22,9 @@ class Game:
         self.assign_values()
         """
         adding an empty set that we will use to store which locations we 
-        have already dug for bombs using tuples (row, col)
+        have already search for bombs using tuples (row, col)
         """
-        self.already_dug = ()
+        self.already_search = ()
         
     def generate_new_game(self):
         """
@@ -96,7 +96,7 @@ def __str__(self):
     shown_board = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
     for row in range (self.board_dim):
         for col in range(self.board_dim):
-            if (row, col) in self.already.dug:
+            if (row, col) in self.already.search:
                 shown_board[row][col] = str(self.game[row][col])
             else:
                 shown_board[row][col] = ' '
