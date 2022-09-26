@@ -96,7 +96,7 @@ class Game:
         shown_board = [[None for _ in range(self.board_dim)] for _ in range(self.board_dim)]
         for row in range (self.board_dim):
             for col in range(self.board_dim):
-                if (row, col) in self.already.search:
+                if (row, col) in self.already_search:
                     shown_board[row][col] = str(self.game[row][col])
                 else:
                     shown_board[row][col] = ' '
@@ -145,7 +145,7 @@ def play(board_dim= 20, bomb_num=20):
      
     safe = True
      
-    while len(game.search) < game.board_dim ** 2 - bomb_num:
+    while len(game.already_search) < game.board_dim ** 2 - bomb_num:
         print(game)
         user_input = re.split (',(\\s)', input("Choose your dig site! Choose well! Format as row, col:"))
         row, col = int(user_input[0]), int (user_input[-1])
