@@ -24,8 +24,7 @@ class Game:
         adding an empty set that we will use to store which locations we 
         have already search for bombs using tuples (row, col)
         """
-        self.already_search = set()
-        
+        self.already_search = ()        
     def generate_new_game(self):
         """
         generates a game by defined dimenion size.
@@ -159,7 +158,7 @@ def play(board_dim=10, bomb_num=10):
         print("You did it!! Well done :)")
     else:
         print("GAME OVER!!! :( ")
-        game.already_search = [(r,c) for r in range(game.board_dim) for c in range(game.board_dim)]
+        game.search = [(r,c) for r in range(game.board_dim) for c in range(game.board_dim)]
         print(game)
     print(game)
     
