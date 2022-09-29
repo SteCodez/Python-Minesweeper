@@ -21,7 +21,7 @@ MAIN MENU
     choice = input('Type here: ').upper()
 
     if choice == 'I':
-        os.system('cls')
+        os.system('clear')
 
         #Prints instructions.
         print(open('instructions.txt', 'r').read())
@@ -29,7 +29,7 @@ MAIN MENU
         input('Press [enter] when ready to play. ')
         
     elif choice != 'P':
-        os.system('cls')
+        os.system('clear')
         reset()
 
     #The solution grid.
@@ -158,7 +158,7 @@ def marker(r, c, k):
 
 #Prints the given board.
 def printBoard(b):
-    os.system('cls')
+    os.system('clear')
     print('    A   B   C   D   E   F   G   H   I')
     print('  ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗')
     for r in range (0, 9):
@@ -200,7 +200,7 @@ def play(b, k, startTime):
         #Offer to play again.
         playAgain = input('Play again? (Y/N): ').lower()
         if playAgain == 'y':
-            os.system('cls')
+            os.system('clear')
             reset()
         else:
             quit()
@@ -225,7 +225,7 @@ def play(b, k, startTime):
         playAgain = input('Play again? (Y/N): ')
         playAgain = playAgain.lower()
         if playAgain == 'y':
-            os.system('cls')
+            os.system('clear')
             reset()
         else:
             quit()
