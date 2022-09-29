@@ -1,6 +1,5 @@
 import random, time, copy, os
 
-
 #Introduction
 print()
 print('Welcome to MineSweeper v.3.0!', 'red')
