@@ -1,340 +1,236 @@
-# Importing packages
-import random
-import os
- 
-# Printing the Minesweeper Layout
-def print_mines_layout():
- 
-    global mine_values
-    global n
- 
-    print()
-    print("\t\t\tMINESWEEPER\n")
- 
-    st = "   "
-    for i in range(n):
-        st = st + "     " + str(i + 1)
-    print(st)   
- 
-    for r in range(n):
-        st = "     "
-        if r == 0:
-            for col in range(n):
-                st = st + "______" 
-            print(st)
- 
-        st = "     "
-        for col in range(n):
-            st = st + "|     "
-        print(st + "|")
-         
-        st = "  " + str(r + 1) + "  "
-        for col in range(n):
-            st = st + "|  " + str(mine_values[r][col]) + "  "
-        print(st + "|") 
- 
-        st = "     "
-        for col in range(n):
-            st = st + "|_____"
-        print(st + '|')
- 
-    print()
-  
-# Function for setting up Mines
-def set_mines():
- 
-    global numbers
-    global mines_no
-    global n
- 
-    # Track of number of mines already set up
-    count = 0
-    while count < mines_no:
- 
-        # Random number from all possible grid positions 
-        val = random.randint(0, n*n-1)
- 
-        # Generating row and column from the number
-        r = val // n
-        col = val % n
- 
-        # Place the mine, if it doesn't already have one
-        if numbers[r][col] != -1:
-            count = count + 1
-            numbers[r][col] = -1
- 
-# Function for setting up the other grid values
-def set_values():
- 
-    global numbers
-    global n
- 
-    # Loop for counting each cell value
-    for r in range(n):
-        for col in range(n):
- 
-            # Skip, if it contains a mine
-            if numbers[r][col] == -1:
-                continue
- 
-            # Check up  
-            if r > 0 and numbers[r-1][col] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check down    
-            if r < n-1  and numbers[r+1][col] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check left
-            if col > 0 and numbers[r][col-1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check right
-            if col < n-1 and numbers[r][col+1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check top-left    
-            if r > 0 and col > 0 and numbers[r-1][col-1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check top-right
-            if r > 0 and col < n-1 and numbers[r-1][col+1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check below-left  
-            if r < n-1 and col > 0 and numbers[r+1][col-1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
-            # Check below-right
-            if r < n-1 and col < n-1 and numbers[r+1][col+1] == -1:
-                numbers[r][col] = numbers[r][col] + 1
- 
-# Recursive function to display all zero-valued neighbours  
-def neighbours(r, col):
-     
-    global mine_values
-    global numbers
-    global vis
- 
-    # If the cell already not visited
-    if [r,col] not in vis:
- 
-        # Mark the cell visited
-        vis.append([r,col])
- 
-        # If the cell is zero-valued
-        if numbers[r][col] == 0:
- 
-            # Display it to the user
-            mine_values[r][col] = numbers[r][col]
- 
-            # Recursive calls for the neighbouring cells
-            if r > 0:
-                neighbours(r-1, col)
-            if r < n-1:
-                neighbours(r+1, col)
-            if col > 0:
-                neighbours(r, col-1)
-            if col < n-1:
-                neighbours(r, col+1)    
-            if r > 0 and col > 0:
-                neighbours(r-1, col-1)
-            if r > 0 and col < n-1:
-                neighbours(r-1, col+1)
-            if r < n-1 and col > 0:
-                neighbours(r+1, col-1)
-            if r < n-1 and col < n-1:
-                neighbours(r+1, col+1)  
- 
-        # If the cell is not zero-valued            
-        if numbers[r][col] != 0:
-                mine_values[r][col] = numbers[r][col]
- 
-# Function for clearing the terminal
-def clear():
-    os.system("clear")      
- 
-# Function to display the instructions
-def instructions():
-    print("Instructions:")
-    print("1. Enter row and column number to select a cell, Example \"2 3\"")
-    print("2. In order to flag a mine, enter F after row and column numbers, Example \"2 3 F\"")
- 
-# Function to check for completion of the game
-def check_over():
-    global mine_values
-    global n
-    global mines_no
- 
-    # Count of all numbered values
-    count = 0
- 
-    # Loop for checking each cell in the grid
-    for r in range(n):
-        for col in range(n):
- 
-            # If cell not empty or flagged
-            if mine_values[r][col] != ' ' and mine_values[r][col] != 'F':
-                count = count + 1
-     
-    # Count comparison          
-    if count == n * n - mines_no:
-        return True
+import random, time, copy, os
+from termcolor import cprint
+
+#Introduction
+print()
+cprint('Welcome to MineSweeper v.3.0!', 'red')
+cprint('=============================', 'red')
+print()
+print('Excited to declare version 3.0 of MineSweeper as fully functional!')
+
+
+#Sets up the game.
+def reset():
+    print('''
+MAIN MENU
+=========
+
+-> For instructions on how to play, type 'I'
+-> To play immediately, type 'P'
+''')
+
+    choice = input('Type here: ').upper()
+
+    if choice == 'I':
+        os.system('cls')
+
+        #Prints instructions.
+        print(open('instructions.txt', 'r').read())
+
+        input('Press [enter] when ready to play. ')
+        
+    elif choice != 'P':
+        os.system('cls')
+        reset()
+
+    #The solution grid.
+    b = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+    for n in range (0, 10):
+        placeBomb(b)
+
+    for r in range (0, 9):
+        for c in range (0, 9):
+            value = l(r, c, b)
+            if value == '*':
+                updateValues(r, c, b)
+
+    #Sets the variable k to a grid of blank spaces, because nothing is yet known about the grid.
+    k = [[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']]
+
+    printBoard(k)
+
+    #Start timer
+    startTime = time.time()
+
+    #The game begins!
+    play(b, k, startTime)
+
+#Gets the value of a coordinate on the grid.
+def l(r, c, b):
+    return b[r][c]
+
+#Places a bomb in a random location.
+def placeBomb(b):
+    r = random.randint(0, 8)
+    c = random.randint(0, 8)
+    #Checks if there's a bomb in the randomly generated location. If not, it puts one there. If there is, it requests a new location to try.
+    currentRow = b[r]
+    if not currentRow[c] == '*':
+        currentRow[c] = '*'
     else:
-        return False
- 
-# Display all the mine locations                    
-def show_mines():
-    global mine_values
-    global numbers
-    global n
- 
-    for r in range(n):
-        for col in range(n):
-            if numbers[r][col] == -1:
-                mine_values[r][col] = 'M'
- 
- 
-if __name__ == "__main__":
- 
-    # Size of grid
-    n = 8
-    # Number of mines
-    mines_no = 8
- 
-    # The actual values of the grid
-    numbers = [[0 for y in range(n)] for x in range(n)] 
-    # The apparent values of the grid
-    mine_values = [[' ' for y in range(n)] for x in range(n)]
-    # The positions that have been flagged
-    flags = []
- 
-    # Set the mines
-    set_mines()
- 
-    # Set the values
-    set_values()
- 
-    # Display the instructions
-    instructions()
- 
-    # Variable for maintaining Game Loop
-    over = False
-         
-    # The GAME LOOP 
-    while not over:
-        print_mines_layout()
- 
-        # Input from the user
-        inp = input("Enter row number followed by space and column number = ").split()
-         
-        # Standard input
-        if len(inp) == 2:
- 
-            # Try block to handle errant input
-            try: 
-                val = list(map(int, inp))
-            except ValueError:
-                clear()
-                print("Wrong input!")
-                instructions()
-                continue
- 
-        # Flag input
-        elif len(inp) == 3:
-            if inp[2] != 'F' and inp[2] != 'f':
-                clear()
-                print("Wrong Input!")
-                instructions()
-                continue
- 
-            # Try block to handle errant input  
-            try:
-                val = list(map(int, inp[:2]))
-            except ValueError:
-                clear()
-                print("Wrong input!")
-                instructions()
-                continue
- 
-            # Sanity checks 
-            if val[0] > n or val[0] < 1 or val[1] > n or val[1] < 1:
-                clear()
-                print("Wrong input!")
-                instructions()
-                continue
- 
-            # Get row and column numbers
-            r = val[0]-1
-            col = val[1]-1 
- 
-            # If cell already been flagged
-            if [r, col] in flags:
-                clear()
-                print("Flag already set")
-                continue
- 
-            # If cell already been displayed
-            if mine_values[r][col] != ' ':
-                clear()
-                print("Value already known")
-                continue
- 
-            # Check the number for flags    
-            if len(flags) < mines_no:
-                clear()
-                print("Flag set")
- 
-                # Adding flag to the list
-                flags.append([r, col])
-                 
-                # Set the flag for display
-                mine_values[r][col] = 'F'
-                continue
-            else:
-                clear()
-                print("Flags finished")
-                continue    
- 
-        else: 
-            clear()
-            print("Wrong input!")   
-            instructions()
-            continue
-             
- 
-        # Sanity checks
-        if val[0] > n or val[0] < 1 or val[1] > n or val[1] < 1:
-            clear()
-            print("Wrong Input!")
-            instructions()
-            continue
-             
-        # Get row and column number
-        r = val[0]-1
-        col = val[1]-1
- 
-        # Unflag the cell if already flagged
-        if [r, col] in flags:
-            flags.remove([r, col])
- 
-        # If landing on a mine --- GAME OVER    
-        if numbers[r][col] == -1:
-            mine_values[r][col] = 'M'
-            show_mines()
-            print_mines_layout()
-            print("Landed on a mine. GAME OVER!!!!!")
-            over = True
-            continue
- 
-        # If landing on a cell with 0 mines in neighboring cells
-        elif numbers[r][col] == 0:
-            vis = []
-            mine_values[r][col] = '0'
-            neighbours(r, col)
- 
-        # If selecting a cell with atleast 1 mine in neighboring cells  
-        else:   
-            mine_values[r][col] = numbers[r][col]
- 
-        # Check for game completion 
-        if(check_over()):
-            show_mines()
-            print_mines_layout()
-            print("Congratulations!!! YOU WIN")
-            over = True
-            continue
-        clear() 
+        placeBomb(b)
+
+#Adds 1 to all of the squares around a bomb.
+def updateValues(rn, c, b):
+
+    #Row above.
+    if rn-1 > -1:
+        r = b[rn-1]
+        
+        if c-1 > -1:
+            if not r[c-1] == '*':
+                r[c-1] += 1
+
+        if not r[c] == '*':
+            r[c] += 1
+
+        if 9 > c+1:
+            if not r[c+1] == '*':
+                r[c+1] += 1
+
+    #Same row.    
+    r = b[rn]
+
+    if c-1 > -1:
+        if not r[c-1] == '*':
+            r[c-1] += 1
+
+    if 9 > c+1:
+        if not r[c+1] == '*':
+            r[c+1] += 1
+
+    #Row below.
+    if 9 > rn+1:
+        r = b[rn+1]
+
+        if c-1 > -1:
+            if not r[c-1] == '*':
+                r[c-1] += 1
+
+        if not r[c] == '*':
+            r[c] += 1
+
+        if 9 > c+1:
+            if not r[c+1] == '*':
+                r[c+1] += 1
+
+#When a zero is found, all the squares around it are opened.
+def zeroProcedure(r, c, k, b):
+
+    #Row above
+    if r-1 > -1:
+        row = k[r-1]
+        if c-1 > -1: row[c-1] = l(r-1, c-1, b)
+        row[c] = l(r-1, c, b)
+        if 9 > c+1: row[c+1] = l(r-1, c+1, b)
+
+    #Same row
+    row = k[r]
+    if c-1 > -1: row[c-1] = l(r, c-1, b)
+    if 9 > c+1: row[c+1] = l(r, c+1, b)
+
+    #Row below
+    if 9 > r+1:
+        row = k[r+1]
+        if c-1 > -1: row[c-1] = l(r+1, c-1, b)
+        row[c] = l(r+1, c, b)
+        if 9 > c+1: row[c+1] = l(r+1, c+1, b)
+
+#Checks known grid for 0s.
+def checkZeros(k, b, r, c):
+    oldGrid = copy.deepcopy(k)
+    zeroProcedure(r, c, k, b)
+    if oldGrid == k:
+        return
+    while True:
+        oldGrid = copy.deepcopy(k)
+        for x in range (9):
+            for y in range (9):
+                if l(x, y, k) == 0:
+                    zeroProcedure(x, y, k, b)
+        if oldGrid == k:
+            return
+
+#Places a marker in the given location.
+def marker(r, c, k):
+    k[r][c] = '⚐'
+    printBoard(k)
+
+#Prints the given board.
+def printBoard(b):
+    os.system('cls')
+    print('    A   B   C   D   E   F   G   H   I')
+    print('  ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗')
+    for r in range (0, 9):
+        print(r,'║',l(r,0,b),'║',l(r,1,b),'║',l(r,2,b),'║',l(r,3,b),'║',l(r,4,b),'║',l(r,5,b),'║',l(r,6,b),'║',l(r,7,b),'║',l(r,8,b),'║')
+        if not r == 8:
+            print('  ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╣')
+    print('  ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╝')
+
+#The player chooses a location.
+def choose(b, k, startTime):
+    #Variables 'n stuff.
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' ,'i']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
+    #Loop in case of invalid entry.
+    while True:
+        chosen = input('Choose a square (eg. E4) or place a marker (eg. mE4): ').lower()
+        #Checks for valid square.
+        if len(chosen) == 3 and chosen[0] == 'm' and chosen[1] in letters and chosen[2] in numbers:
+            c, r = (ord(chosen[1]))-97, int(chosen[2])
+            marker(r, c, k)
+            play(b, k, startTime)
+            break
+        elif len(chosen) == 2 and chosen[0] in letters and chosen[1] in numbers: return (ord(chosen[0]))-97, int(chosen[1])
+        else: choose(b, k, startTime)    
+
+
+#The majority of the gameplay happens here.
+def play(b, k, startTime):
+    #Player chooses square.
+    c, r = choose(b, k, startTime)
+    #Gets the value at that location.
+    v = l(r, c, b)
+    #If you hit a bomb, it ends the game.
+    if v == '*':
+        printBoard(b)
+        print('You Lose!')
+        #Print timer result.
+        print('Time: ' + str(round(time.time() - startTime)) + 's')
+        #Offer to play again.
+        playAgain = input('Play again? (Y/N): ').lower()
+        if playAgain == 'y':
+            os.system('cls')
+            reset()
+        else:
+            quit()
+    #Puts that value into the known grid (k).
+    k[r][c] = v
+    #Runs checkZeros() if that value is a 0.
+    if v == 0:
+        checkZeros(k, b, r, c)
+    printBoard(k)
+    #Checks to see if you have won.
+    squaresLeft = 0
+    for x in range (0, 9):
+        row = k[x]
+        squaresLeft += row.count(' ')
+        squaresLeft += row.count('⚐')
+    if squaresLeft == 10:
+        printBoard(b)
+        print('You win!')
+        #Print timer result.
+        print('Time: ' + str(round(time.time() - startTime)) + 's')
+        #Offer to play again.
+        playAgain = input('Play again? (Y/N): ')
+        playAgain = playAgain.lower()
+        if playAgain == 'y':
+            os.system('cls')
+            reset()
+        else:
+            quit()
+    #Repeats!
+    play(b, k, startTime)
+
+reset()
