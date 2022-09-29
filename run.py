@@ -1,10 +1,10 @@
 import random, time, copy, os
-from termcolor import cprint
+
 
 #Introduction
 print()
-cprint('Welcome to MineSweeper v.3.0!', 'red')
-cprint('=============================', 'red')
+print('Welcome to MineSweeper v.3.0!', 'red')
+print('=============================', 'red')
 print()
 print('Excited to declare version 3.0 of MineSweeper as fully functional!')
 
